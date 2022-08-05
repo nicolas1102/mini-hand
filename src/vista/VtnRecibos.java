@@ -37,6 +37,7 @@ public class VtnRecibos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jProgressBar1 = new javax.swing.JProgressBar();
         jPanel3 = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -44,8 +45,9 @@ public class VtnRecibos extends javax.swing.JFrame {
         btnActualizarRecibo = new javax.swing.JButton();
         btnEliminarRecibo = new javax.swing.JButton();
         btnAgregarRecibo = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        txtFBuscarRecibos = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        btnBuscarRecibos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,9 +94,15 @@ public class VtnRecibos extends javax.swing.JFrame {
 
         btnAgregarRecibo.setText("Agregar Recibo");
 
-        jTextField1.setText("jTextField1");
+        txtFBuscarRecibos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFBuscarRecibosActionPerformed(evt);
+            }
+        });
 
-        jTextField2.setText("jTextField2");
+        jLabel1.setText("Buscar recibos de estudiante con codigo: ");
+
+        btnBuscarRecibos.setText("Buscar Recibos Estudiante");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -116,10 +124,12 @@ public class VtnRecibos extends javax.swing.JFrame {
                 .addComponent(btnEliminarRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(248, 248, 248)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(209, 209, 209)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(jLabel1)
+                .addGap(36, 36, 36)
+                .addComponent(txtFBuscarRecibos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBuscarRecibos)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -127,8 +137,9 @@ public class VtnRecibos extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtFBuscarRecibos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(btnBuscarRecibos))
                 .addGap(27, 27, 27)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
@@ -161,17 +172,23 @@ public class VtnRecibos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtFBuscarRecibosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFBuscarRecibosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFBuscarRecibosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnActualizarRecibo;
     public javax.swing.JButton btnAgregarRecibo;
+    public javax.swing.JButton btnBuscarRecibos;
     public javax.swing.JButton btnEliminarRecibo;
     public javax.swing.JButton btnSalir;
+    private javax.swing.JLabel jLabel1;
     public javax.swing.JPanel jPanel3;
+    private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     public javax.swing.JTable tableEstudiantesRegistros;
+    public javax.swing.JTextField txtFBuscarRecibos;
     // End of variables declaration//GEN-END:variables
 
     /**

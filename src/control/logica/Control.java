@@ -28,6 +28,8 @@ import modelo.MesVO;
 import modelo.PagoVO;
 import modelo.PersonaVO;
 import modelo.ReciboVO;
+import vista.VtnActualizarRecibo;
+import vista.VtnAgregarRecibo;
 import vista.VtnPrincipal;
 import vista.VtnRecibos;
 
@@ -44,8 +46,11 @@ public class Control implements ActionListener {
     //----------- ATRIBUTOS ---------------------
     private VtnPrincipal vtnPrincipal;
     private VtnRecibos vtnRecibos;
+    private VtnAgregarRecibo vtnAgregarRecibo;
+    private VtnActualizarRecibo vtnActualizarRecibo;
     private RecibosDAO miRecibosDAO;
     private ArrayList<ReciboVO> listaRecibos;
+    private int cantRegistros = 0;
 
     // SINGLETON - Control de solo una instancia de clase
     public static Control getInstancia() throws IOException {
@@ -65,6 +70,8 @@ public class Control implements ActionListener {
         // SINGLETON - Ventana principal
         vtnPrincipal = VtnPrincipal.getInstancia();
         vtnRecibos = VtnRecibos.getInstancia();
+        vtnAgregarRecibo = VtnAgregarRecibo.getInstancia();
+        vtnActualizarRecibo = vtnActualizarRecibo.getInstancia();
 
         // configura la conexion con la base de datos
         Conexion.getConexion();
@@ -77,18 +84,6 @@ public class Control implements ActionListener {
 
         // iniciar ventana principal
         iniciarVtnPrincipal();
-
-    }
-
-    public void insertarRecibosATabla() {
-        DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
-        for (int i = 0; i < 4; i++){
-            modelo.removeRow(0);
-        }
-        
-        for (ReciboVO recibo : listaRecibos) {
-            modelo.addRow(new Object[]{recibo.getCodigo_estudiante(), recibo.getNombre_persona(), recibo.getDescripcion_grado(), recibo.getCodigo_pago(), recibo.getDescripcion_detalle(), recibo.getAño_mes(), recibo.getNombre_mes(), recibo.getEstado_pago(), recibo.getValor_detalle()});
-        }
 
     }
 
@@ -108,11 +103,29 @@ public class Control implements ActionListener {
 
     public void iniciarVtnRecibos() throws IOException {
         //configuracion del titulo de la ventana
-        vtnRecibos.setTitle("MiniHand - Estudiantes");
+        vtnRecibos.setTitle("MiniHand - Recibos");
         // configuracion de la posicion de la ventana
         vtnRecibos.setLocationRelativeTo(null);
         vtnRecibos.setVisible(true);
         agregarActionListenerVtnEstudiantes();
+    }
+
+    public void iniciarVtnAgregarRecibo() throws IOException {
+        //configuracion del titulo de la ventana
+        vtnAgregarRecibo.setTitle("MiniHand - Agregar Recibo");
+        // configuracion de la posicion de la ventana
+        vtnAgregarRecibo.setLocationRelativeTo(null);
+        vtnAgregarRecibo.setVisible(true);
+        agregarActionListenerVtnAgregarRecibo();
+    }
+
+    public void iniciarVtnActualizarRecibo() throws IOException {
+        //configuracion del titulo de la ventana
+        vtnActualizarRecibo.setTitle("MiniHand - Actualizar Recibo");
+        // configuracion de la posicion de la ventana
+        vtnActualizarRecibo.setLocationRelativeTo(null);
+        vtnActualizarRecibo.setVisible(true);
+        agregarActionListenerVtnActualizarRecibo();
     }
 
     // ----------------------------------------- AGREGACION DE ACTIONLISTENER DE CADA VENTANA -----------------------------
@@ -124,10 +137,41 @@ public class Control implements ActionListener {
 
     public void agregarActionListenerVtnEstudiantes() throws IOException {
         // se preparan los botones de la interfaz para que pueda escuchar instrucciones
+        this.vtnRecibos.btnBuscarRecibos.addActionListener(this);
         this.vtnRecibos.btnAgregarRecibo.addActionListener(this);
         this.vtnRecibos.btnActualizarRecibo.addActionListener(this);
         this.vtnRecibos.btnEliminarRecibo.addActionListener(this);
         this.vtnRecibos.btnSalir.addActionListener(this);
+    }
+
+    public void agregarActionListenerVtnAgregarRecibo() throws IOException {
+        // se preparan los botones de la interfaz para que pueda escuchar instrucciones
+        this.vtnAgregarRecibo.btnAgregarRecibo.addActionListener(this);
+    }
+
+    public void agregarActionListenerVtnActualizarRecibo() throws IOException {
+        // se preparan los botones de la interfaz para que pueda escuchar instrucciones
+        this.vtnActualizarRecibo.btnActualizarRecibo.addActionListener(this);
+    }
+
+    // ----------------------------------------- FUNCIONALIDADES -------------------------------------
+    public void insertarRecibosATabla(ArrayList<ReciboVO> auxListaRecibos) {
+        DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
+
+        for (ReciboVO recibo : auxListaRecibos) {
+            modelo.addRow(new Object[]{recibo.getCodigo_estudiante(), recibo.getNombre_persona(), recibo.getDescripcion_grado(), recibo.getCodigo_pago(), recibo.getDescripcion_detalle(), recibo.getAño_mes(), recibo.getNombre_mes(), recibo.getEstado_pago(), recibo.getValor_detalle()});
+            cantRegistros = cantRegistros + 1;
+        }
+
+    }
+
+    public void actualizarTabla(ArrayList<ReciboVO> auxListaRecibos) {
+        DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
+        for (int i = 0; i < cantRegistros; i++) {
+            modelo.removeRow(0);
+        }
+        cantRegistros = 0;
+        insertarRecibosATabla(auxListaRecibos);
     }
 
     // -----------------------------------------  CONFIGURACION DE BOTONES -----------------------------------------------
@@ -142,57 +186,72 @@ public class Control implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         //  -------------------------------------- BOTONES VENTANA PRINCIPAL ------------------------------------------------
-//        if (e.getSource() == vtnLogin.btnEntrar) {
-//
-//            if ((!vtnLogin.checkEmpleado.isSelected())) {
-//                try {
-//                    miClientesDAO = ClientesDAO.getInstancia();
-//
-//                    // verificacion de credenciales
-//                    ClienteVO clienteLogeado = miClientesDAO.consultarCliente(vtnLogin.textFUsername.getText(), vtnLogin.textFContrasena.getText());
-//
-//                    if (clienteLogeado.getNombre() != null) {
-//
-//                        // ---- CONSTRUCCION PEDIDO ----
-//                        codigo_cliente = clienteLogeado.getCodigo();
-//                        pedido.setCodigo_cliente(codigo_cliente);
-//
-//                        iniciarVtnMultiplex();
-//                        vtnLogin.setVisible(false);
-//
-//                    } else {
-//                        // reemplazar por joption pain emergente situada en metodo de la ventana login
-//                        System.out.println("Usuario o contraseña incorrecto, vuelva a intentar");
-//                    }
-//
-//                } catch (IOException ex) {
-//                    Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            } else {
-//                // logica de empleado (ventana)
-//            }
-//        }
-        //  -------------------------------------- BOTONES VENTANA ESTUDIANTES ------------------------------------------------
         if (e.getSource() == vtnPrincipal.btnInciar) {
+            DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
+            for (int i = 0; i < 4; i++) {
+                modelo.removeRow(0);
+            }
+
             try {
                 iniciarVtnRecibos();
                 vtnPrincipal.setVisible(false);
             } catch (IOException ex) {
                 Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            insertarRecibosATabla();
+            insertarRecibosATabla(listaRecibos);
 
         }
 
-        //  -------------------------------------- BOTONES VENTANA GRADOS ------------------------------------------------
-        //  -------------------------------------- BOTONES VENTANA PAGOS ------------------------------------------------
-        //  -------------------------------------- BOTONES VENTANA MES ------------------------------------------------
-        //  -------------------------------------- BOTONES VENTANA DETALLE ------------------------------------------------
+        //  -------------------------------------- BOTONES VENTANA ESTUDIANTES ------------------------------------------------
+        if (e.getSource() == vtnRecibos.btnBuscarRecibos) {
+            ArrayList<ReciboVO> auxListaRecibos = new ArrayList<>();
+
+            for (ReciboVO recibo : listaRecibos) {
+                if (vtnRecibos.txtFBuscarRecibos.getText().equals(String.valueOf(recibo.getCodigo_estudiante()))) {
+                    auxListaRecibos.add(recibo);
+                }
+            }
+            actualizarTabla(auxListaRecibos);
+        }
+
+        if (e.getSource() == vtnRecibos.btnAgregarRecibo) {
+
+            try {
+                iniciarVtnAgregarRecibo();
+
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+        if (e.getSource() == vtnRecibos.btnActualizarRecibo) {
+            try {
+                iniciarVtnActualizarRecibo();
+                for (ReciboVO recibo : listaRecibos) {
+                    vtnActualizarRecibo.cBoxCodPago.addItem(String.valueOf(recibo.getCodigo_pago()));
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        if (e.getSource() == vtnActualizarRecibo.btnActualizarRecibo) {
+            ReciboVO recibo = listaRecibos.get(Integer.parseInt((String) vtnActualizarRecibo.cBoxCodPago.getSelectedItem()));
+            
+            miRecibosDAO.modificarRegistro(recibo.getCodigo_pago(), String.valueOf(vtnActualizarRecibo.cBoxCodPago1.getSelectedItem()), recibo.getCodigo_estudiante(), recibo.getCodigo_mes(), recibo.getCodigo_detalle());
+            listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
+            
+            actualizarTabla(listaRecibos);
+            
+            vtnActualizarRecibo.dispose();
+        }
+
         // ---------------------------------- BOTON SALIR DE TODAS LAS VENTANAS ----------------------------------------------
         if ((e.getSource() == vtnPrincipal.btnSalir) || (e.getSource() == vtnRecibos.btnSalir)) {
             vtnPrincipal.dispose();
             vtnRecibos.dispose();
+            System.exit(0);
         }
     }
 

@@ -252,6 +252,35 @@ public class RecibosDAO {
             System.exit(0);
         }
     }
+    
+    public boolean modificarRegistro(int codigo_pago, String estado_pago, int codigo_estudiante, int codigo_mes, int codigo_detalle) {
+        Statement stModicficar = null;
+        //Instruccion en sql para modificar cada uno de los campos de un registro con los objetos que llegaron
+        String consulta1 = "update pagos set estado_pago ='" + estado_pago + "' where codigo_pago=" + codigo_pago;
+        String consulta2 = "update pagos set codigo_estudiante ='" + codigo_estudiante + "' where codigo_pago=" + codigo_pago;
+        String consulta3 = "update pagos set codigo_mes ='" + codigo_mes + "' where codigo_pago=" + codigo_pago;
+        String consulta4 = "update pagos set codigo_detalle ='" + codigo_detalle + "' where codigo_pago=" + codigo_pago;
+        try {
+            // pedimos una conexion
+            con = Conexion.getConexion();
+            // crea una consulta
+            stModicficar = con.createStatement();
+            // enviamos la instruccion para que actualice "update" la base de datos con la instruccion que ingresamos arriba
+            stModicficar.executeUpdate(consulta1);
+            stModicficar.executeUpdate(consulta2);
+            stModicficar.executeUpdate(consulta3);
+            stModicficar.executeUpdate(consulta4);
+            // cierra el stamenten porque ya se realizo la consulta
+            stModicficar.close();
+            // desconecta la DB
+            Conexion.desconectar();
+            return true;
+        } catch (SQLException ex) {
+            // ventana emergente en caso de errros que comunica que "No se pudo modificar el animal"
+            VtnPrincipal.mostrarJOptionPane(9);
+        }
+        return false;
+    }
 
     /**
      * metodo encargado de insertar datos a la BD que llegan como parametros
@@ -259,7 +288,7 @@ public class RecibosDAO {
      * @param user
      * @param pass
      */
-    public void insertarPago(int codigo_pago, String estado_pago, String estudiante_pago, String codigo_mes, int codigo_detalle) {
+    public void insertarRecibo(int codigo_pago, String estado_pago, String estudiante_pago, String codigo_mes, int codigo_detalle) {
 
         Statement stPagos = null;
         ResultSet rsPagos = null;
