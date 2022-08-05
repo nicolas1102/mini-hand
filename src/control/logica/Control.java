@@ -7,12 +7,6 @@
 package control.logica;
 
 import control.conexion.Conexion;
-import control.dao.DetalleDAO;
-import control.dao.EstudianteDAO;
-import control.dao.GradoDAO;
-import control.dao.MesDAO;
-import control.dao.PagoDAO;
-import control.dao.PersonaDAO;
 import control.dao.RecibosDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,12 +15,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
-import modelo.DetalleVO;
-import modelo.EstudianteVO;
-import modelo.GradoVO;
-import modelo.MesVO;
-import modelo.PagoVO;
-import modelo.PersonaVO;
 import modelo.ReciboVO;
 import vista.VtnActualizarRecibo;
 import vista.VtnAgregarRecibo;
@@ -35,8 +23,9 @@ import vista.VtnRecibos;
 
 /**
  *
- *
- * @author Usuario
+ * @author Miguel Londoño
+ * @author Felipe Pacheco
+ * @author Nicolas Diaz
  */
 public class Control implements ActionListener {
 
@@ -76,10 +65,13 @@ public class Control implements ActionListener {
         // configura la conexion con la base de datos
         Conexion.getConexion();
 
+        // arraylist donde se guarda los objetos
         listaRecibos = new ArrayList<>();
 
+        // objeto para operaciones con la base de datos
         miRecibosDAO = RecibosDAO.getInstancia();
-        //instanciacion de arraylist donde se guardaran objetos de cada tipo de registro de la base de datos
+        
+        // recuperacion de registros
         listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
 
         // iniciar ventana principal
@@ -100,7 +92,6 @@ public class Control implements ActionListener {
         vtnPrincipal.setVisible(true);
         agregarActionListenerVtnPrincipal();
     }
-
     public void iniciarVtnRecibos() throws IOException {
         //configuracion del titulo de la ventana
         vtnRecibos.setTitle("MiniHand - Recibos");
@@ -156,9 +147,12 @@ public class Control implements ActionListener {
 
     // ----------------------------------------- FUNCIONALIDADES -------------------------------------
     public void insertarRecibosATabla(ArrayList<ReciboVO> auxListaRecibos) {
+        // manejo de modelo de la tabla de resgistros
         DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
 
+        // recorrer lista de recibos 
         for (ReciboVO recibo : auxListaRecibos) {
+            // agregar registro a tabla de registros
             modelo.addRow(new Object[]{recibo.getCodigo_estudiante(), recibo.getNombre_persona(), recibo.getDescripcion_grado(), recibo.getCodigo_pago(), recibo.getDescripcion_detalle(), recibo.getAño_mes(), recibo.getNombre_mes(), recibo.getEstado_pago(), recibo.getValor_detalle()});
             cantRegistros = cantRegistros + 1;
         }
@@ -167,10 +161,14 @@ public class Control implements ActionListener {
 
     public void actualizarTabla(ArrayList<ReciboVO> auxListaRecibos) {
         DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
+        
+        // borra registros de tabla
         for (int i = 0; i < cantRegistros; i++) {
             modelo.removeRow(0);
         }
         cantRegistros = 0;
+        
+        // metodo usado para volver a registrar recibos
         insertarRecibosATabla(auxListaRecibos);
     }
 
@@ -187,6 +185,7 @@ public class Control implements ActionListener {
 
         //  -------------------------------------- BOTONES VENTANA PRINCIPAL ------------------------------------------------
         if (e.getSource() == vtnPrincipal.btnInciar) {
+            // remover filas inusadas de la tabla
             DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
             for (int i = 0; i < 4; i++) {
                 modelo.removeRow(0);
@@ -198,11 +197,13 @@ public class Control implements ActionListener {
             } catch (IOException ex) {
                 Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
+            // 
             insertarRecibosATabla(listaRecibos);
 
         }
 
-        //  -------------------------------------- BOTONES VENTANA ESTUDIANTES ------------------------------------------------
+        //  -------------------------------------- BOTONES VENTANA RECIBOS ------------------------------------------------
         if (e.getSource() == vtnRecibos.btnBuscarRecibos) {
             ArrayList<ReciboVO> auxListaRecibos = new ArrayList<>();
 
@@ -215,13 +216,12 @@ public class Control implements ActionListener {
         }
 
         if (e.getSource() == vtnRecibos.btnAgregarRecibo) {
-
-            try {
-                iniciarVtnAgregarRecibo();
-
-            } catch (IOException ex) {
-                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                iniciarVtnAgregarRecibo();
+//
+//            } catch (IOException ex) {
+//                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 
         }
 
@@ -236,6 +236,8 @@ public class Control implements ActionListener {
             }
         }
 
+        
+        // -------------------------- VENTANA ACTUALIZAR RECIBO ----------------------
         if (e.getSource() == vtnActualizarRecibo.btnActualizarRecibo) {
             ReciboVO recibo = listaRecibos.get(Integer.parseInt((String) vtnActualizarRecibo.cBoxCodPago.getSelectedItem()));
             

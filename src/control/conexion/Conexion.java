@@ -1,30 +1,31 @@
 /*
     Document   : Inicio
-    Created on : 22 jul. 2022, 20:19:49
-    Author     : Miguel Londono, Nicolas Diaz, Daniel Paez
-    Project: Proyecto Final de Modelos de Programacion I
+    Created on : 3 ago. 2022, 20:19:49
+    Author     : Miguel Londono, Nicolas Diaz, Felipe Pacheco
+    Project: Proyecto Final de Fundamentos de Bases de Datos
  */
 package control.conexion;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
  *
- * @author Usuario
+ * @author Miguel Londoño
+ * @author Felipe Pacheco
+ * @author Nicolas Diaz
  */
 public class Conexion {
 
-    // atributos de clase necesarios para crear la conexion
+    // atributos de clase necesarios para crear la conexion con la base de datos
     private static Connection cn = null;
     private static String driver = "com.mysql.jdbc.Driver";
     private static String url = "jdbc:mysql://localhost:3306/minihanddb";
     private static String usuario = "root";
     private static String contrasena = "";
 
+    // singleton
     private static Conexion instancia;
 
     private Conexion() {
@@ -41,6 +42,7 @@ public class Conexion {
         }
     }
 
+    // singleton
     public static Connection getConexion() {
         if (cn == null) {
             new Conexion();

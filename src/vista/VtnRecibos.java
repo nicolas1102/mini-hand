@@ -1,6 +1,5 @@
 package vista;
 
-import control.dao.PersonaDAO;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 

@@ -7,19 +7,19 @@
 package control.dao;
 
 import control.conexion.Conexion;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import modelo.PagoVO;
 import modelo.ReciboVO;
 import vista.VtnPrincipal;
 
 /**
  *
- * @author Usuario
+ * @author Miguel Londoño
+ * @author Felipe Pacheco
+ * @author Nicolas Diaz
  */
 public class RecibosDAO {
 
@@ -49,6 +49,7 @@ public class RecibosDAO {
         Statement stPagos = null;
         ResultSet rsPagos = null;
 
+        // lista donde guardara registros de la base de datos
         ArrayList<ReciboVO> misRecibos = new ArrayList<>();
         
         // Instruccion en sql que pide todos los registros de la base de datos
@@ -62,9 +63,9 @@ public class RecibosDAO {
             // guarda lo que retorna la consultta
             rsPagos = stPagos.executeQuery(consulta);
             // mientras haya mas registros en la BD sigue ejecutando el bloque de codifo
-            while (rsPagos.next()) {
+            while (rsPagos.next()) { // guardado de datos de registros
                 ReciboVO recibo = new ReciboVO();
-                // pedimos datos del registro y se lo asignamos a cada variable de nuestro animal instanciado anteriomente
+                
                 recibo.setCodigo_pago(Integer.parseInt(rsPagos.getString("codigo_pago")));
                 recibo.setEstado_pago(rsPagos.getString("estado_pago"));
 
@@ -77,7 +78,7 @@ public class RecibosDAO {
                 recibo.setCodigo_detalle(Integer.parseInt(rsPagos.getString("codigo_detalle")));
                 recuperarDatosDeDetallesDeBaseDeDatos(recibo);
 
-                misRecibos.add(recibo);
+                misRecibos.add(recibo); // se agrega objeto en la lista
             }
 
             // cierra el stamenten porque ya se realizo la consulta
