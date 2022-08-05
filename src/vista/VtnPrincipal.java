@@ -43,11 +43,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
 
         jPanel3 = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
-        btnEstudiantes = new javax.swing.JButton();
-        btnGrados = new javax.swing.JButton();
-        btnPagos = new javax.swing.JButton();
-        btnMeses = new javax.swing.JButton();
-        btnDetalles = new javax.swing.JButton();
+        btnInciar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -59,27 +55,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
         btnSalir.setForeground(new java.awt.Color(0, 0, 0));
         btnSalir.setText("Salir");
 
-        btnEstudiantes.setBackground(new java.awt.Color(255, 255, 255));
-        btnEstudiantes.setForeground(new java.awt.Color(0, 0, 0));
-        btnEstudiantes.setText("Tabla Estudiantes");
-
-        btnGrados.setBackground(new java.awt.Color(255, 255, 255));
-        btnGrados.setForeground(new java.awt.Color(0, 0, 0));
-        btnGrados.setText("Tabla Grados");
-
-        btnPagos.setBackground(new java.awt.Color(255, 255, 255));
-        btnPagos.setForeground(new java.awt.Color(0, 0, 0));
-        btnPagos.setText("Tabla Pagos");
-
-        btnMeses.setBackground(new java.awt.Color(255, 255, 255));
-        btnMeses.setForeground(new java.awt.Color(0, 0, 0));
-        btnMeses.setText("Tabla Mes");
-        btnMeses.setToolTipText("");
-
-        btnDetalles.setBackground(new java.awt.Color(255, 255, 255));
-        btnDetalles.setForeground(new java.awt.Color(0, 0, 0));
-        btnDetalles.setText("Tabla Detalle");
-        btnDetalles.setToolTipText("");
+        btnInciar.setText("Iniciar Aplicativo");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -91,29 +67,16 @@ public class VtnPrincipal extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(btnSalir))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(104, 104, 104)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(btnGrados, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnEstudiantes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 246, Short.MAX_VALUE)
-                            .addComponent(btnPagos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnMeses, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnDetalles, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(100, Short.MAX_VALUE))
+                        .addGap(153, 153, 153)
+                        .addComponent(btnInciar, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addComponent(btnEstudiantes)
-                .addGap(18, 18, 18)
-                .addComponent(btnGrados)
-                .addGap(18, 18, 18)
-                .addComponent(btnPagos)
-                .addGap(18, 18, 18)
-                .addComponent(btnMeses)
-                .addGap(18, 18, 18)
-                .addComponent(btnDetalles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 105, Short.MAX_VALUE)
+                .addGap(146, 146, 146)
+                .addComponent(btnInciar, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 149, Short.MAX_VALUE)
                 .addComponent(btnSalir)
                 .addContainerGap())
         );
@@ -139,11 +102,7 @@ public class VtnPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnDetalles;
-    public javax.swing.JButton btnEstudiantes;
-    public javax.swing.JButton btnGrados;
-    public javax.swing.JButton btnMeses;
-    public javax.swing.JButton btnPagos;
+    public javax.swing.JButton btnInciar;
     public javax.swing.JButton btnSalir;
     public javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables

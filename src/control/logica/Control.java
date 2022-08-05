@@ -13,18 +13,23 @@ import control.dao.GradoDAO;
 import control.dao.MesDAO;
 import control.dao.PagoDAO;
 import control.dao.PersonaDAO;
+import control.dao.RecibosDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import modelo.DetalleVO;
 import modelo.EstudianteVO;
 import modelo.GradoVO;
 import modelo.MesVO;
 import modelo.PagoVO;
 import modelo.PersonaVO;
+import modelo.ReciboVO;
 import vista.VtnPrincipal;
-import vista.VtnEstudiantes;
+import vista.VtnRecibos;
 
 /**
  *
@@ -38,19 +43,9 @@ public class Control implements ActionListener {
 
     //----------- ATRIBUTOS ---------------------
     private VtnPrincipal vtnPrincipal;
-    private VtnEstudiantes vtnEstudiantes;
-    private DetalleDAO misDetallesDAO;
-    private EstudianteDAO misEstudiantesDAO;
-    private GradoDAO misGradosDAO;
-    private MesDAO misMesesDAO;
-    private PagoDAO misPagosDAO;
-    private PersonaDAO misPersonasDAO;
-    private ArrayList<DetalleVO> listaDetalles;
-    private ArrayList<EstudianteVO> listaEstudiantes;
-    private ArrayList<GradoVO> listaGrados;
-    private ArrayList<MesVO> listaMes;
-    private ArrayList<PagoVO> listaPagos;
-    private ArrayList<PersonaVO> listaPersonas;
+    private VtnRecibos vtnRecibos;
+    private RecibosDAO miRecibosDAO;
+    private ArrayList<ReciboVO> listaRecibos;
 
     // SINGLETON - Control de solo una instancia de clase
     public static Control getInstancia() throws IOException {
@@ -69,50 +64,34 @@ public class Control implements ActionListener {
 
         // SINGLETON - Ventana principal
         vtnPrincipal = VtnPrincipal.getInstancia();
-        vtnEstudiantes = VtnEstudiantes.getInstancia();
-    
-        //instanciacion de arraylist donde se guardaran objetos de cada tipo de registro de la base de datos
-        listaDetalles = new ArrayList<>();
-        listaEstudiantes = new ArrayList<>();
-        listaGrados = new ArrayList<>();
-        listaMes = new ArrayList<>();
-        listaPagos = new ArrayList<>();
-        listaPersonas = new ArrayList<>();
+        vtnRecibos = VtnRecibos.getInstancia();
 
         // configura la conexion con la base de datos
         Conexion.getConexion();
-        // obtener registros de la base de datos e ingresarlos a arraylist de cada tipo
-        obtenerRegistrosBaseDeDatos();
-        // iniciar ventana
+
+        listaRecibos = new ArrayList<>();
+
+        miRecibosDAO = RecibosDAO.getInstancia();
+        //instanciacion de arraylist donde se guardaran objetos de cada tipo de registro de la base de datos
+        listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
+
+        // iniciar ventana principal
         iniciarVtnPrincipal();
 
     }
 
-    // ------------------------------------- OBTENCION DE REGISTROS DE LAS TABLASE DE LA BASE DE DATOS -------------------------------
-    /**
-     * Recoge el arraylist con todos los animales registrados en la base de
-     * datos anteriormente, luego de esto guarda un archivo aleatorio con toda
-     * la informacion
-     */
-    public void obtenerRegistrosBaseDeDatos() {
-        // creacion de una nueva instancia para su implementacion al recuperar una arraylist con todos los registros de la base de datos
-        misDetallesDAO = DetalleDAO.getInstancia();
-        misEstudiantesDAO = EstudianteDAO.getInstancia();
-        misGradosDAO = GradoDAO.getInstancia();
-        misMesesDAO = MesDAO.getInstancia();
-        misPagosDAO = PagoDAO.getInstancia();
-        misPersonasDAO = PersonaDAO.getInstancia();
+    public void insertarRecibosATabla() {
+        DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
+        for (int i = 0; i < 4; i++){
+            modelo.removeRow(0);
+        }
         
-        // extracion de datos
-        listaDetalles = misDetallesDAO.recuperarListaDeDetallesDeBaseDeDatos();
-        listaEstudiantes = misEstudiantesDAO.recuperarListaDeEstudiantesDeBaseDeDatos();
-        listaGrados = misGradosDAO.recuperarListaDeGradosDeBaseDeDatos();
-        listaMes = misMesesDAO.recuperarListaDeMesesDeBaseDeDatos();
-        listaPagos = misPagosDAO.recuperarListaDePagosDeBaseDeDatos();
-        listaPersonas = misPersonasDAO.recuperarListaDePersonasBaseDeDatos();
+        for (ReciboVO recibo : listaRecibos) {
+            modelo.addRow(new Object[]{recibo.getCodigo_estudiante(), recibo.getNombre_persona(), recibo.getDescripcion_grado(), recibo.getCodigo_pago(), recibo.getDescripcion_detalle(), recibo.getAño_mes(), recibo.getNombre_mes(), recibo.getEstado_pago(), recibo.getValor_detalle()});
+        }
 
     }
-    
+
     // -------------------------------------------------  INICIACION DE VENTANAS ----------------------------------------
     /**
      * Metodo encargado de iniciar la ventana principal, dandole una posicion y
@@ -124,27 +103,31 @@ public class Control implements ActionListener {
         // configuracion de la posicion de la ventana
         vtnPrincipal.setLocationRelativeTo(null);
         vtnPrincipal.setVisible(true);
-        agregarActionListenerVtnLogin();
+        agregarActionListenerVtnPrincipal();
     }
 
-    public void iniciarVtnMultiplex() throws IOException {
+    public void iniciarVtnRecibos() throws IOException {
         //configuracion del titulo de la ventana
-        vtnEstudiantes.setTitle("MiniHand - Estudiantes");
+        vtnRecibos.setTitle("MiniHand - Estudiantes");
         // configuracion de la posicion de la ventana
-        vtnEstudiantes.setLocationRelativeTo(null);
-        vtnEstudiantes.setVisible(true);
+        vtnRecibos.setLocationRelativeTo(null);
+        vtnRecibos.setVisible(true);
         agregarActionListenerVtnEstudiantes();
     }
 
     // ----------------------------------------- AGREGACION DE ACTIONLISTENER DE CADA VENTANA -----------------------------
-    public void agregarActionListenerVtnLogin() throws IOException {
+    public void agregarActionListenerVtnPrincipal() throws IOException {
         // se preparan los botones de la interfaz para que pueda escuchar instrucciones
+        this.vtnPrincipal.btnInciar.addActionListener(this);
         this.vtnPrincipal.btnSalir.addActionListener(this);
     }
 
     public void agregarActionListenerVtnEstudiantes() throws IOException {
         // se preparan los botones de la interfaz para que pueda escuchar instrucciones
-        this.vtnEstudiantes.btnSalir.addActionListener(this);
+        this.vtnRecibos.btnAgregarRecibo.addActionListener(this);
+        this.vtnRecibos.btnActualizarRecibo.addActionListener(this);
+        this.vtnRecibos.btnEliminarRecibo.addActionListener(this);
+        this.vtnRecibos.btnSalir.addActionListener(this);
     }
 
     // -----------------------------------------  CONFIGURACION DE BOTONES -----------------------------------------------
@@ -158,7 +141,7 @@ public class Control implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        //  -------------------------------------- BOTONES VENTANA LOGIN ------------------------------------------------
+        //  -------------------------------------- BOTONES VENTANA PRINCIPAL ------------------------------------------------
 //        if (e.getSource() == vtnLogin.btnEntrar) {
 //
 //            if ((!vtnLogin.checkEmpleado.isSelected())) {
@@ -189,12 +172,27 @@ public class Control implements ActionListener {
 //                // logica de empleado (ventana)
 //            }
 //        }
+        //  -------------------------------------- BOTONES VENTANA ESTUDIANTES ------------------------------------------------
+        if (e.getSource() == vtnPrincipal.btnInciar) {
+            try {
+                iniciarVtnRecibos();
+                vtnPrincipal.setVisible(false);
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-       
+            insertarRecibosATabla();
+
+        }
+
+        //  -------------------------------------- BOTONES VENTANA GRADOS ------------------------------------------------
+        //  -------------------------------------- BOTONES VENTANA PAGOS ------------------------------------------------
+        //  -------------------------------------- BOTONES VENTANA MES ------------------------------------------------
+        //  -------------------------------------- BOTONES VENTANA DETALLE ------------------------------------------------
         // ---------------------------------- BOTON SALIR DE TODAS LAS VENTANAS ----------------------------------------------
-        if ((e.getSource() == vtnPrincipal.btnSalir) || (e.getSource() == vtnEstudiantes.btnSalir)) {
+        if ((e.getSource() == vtnPrincipal.btnSalir) || (e.getSource() == vtnRecibos.btnSalir)) {
             vtnPrincipal.dispose();
-            vtnEstudiantes.dispose();
+            vtnRecibos.dispose();
         }
     }
 

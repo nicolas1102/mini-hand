@@ -10,7 +10,6 @@ public class DetalleVO {
     private int codigo_detalle;
     private String descripcion_detalle;
     private int valor_detalle;
-    private int codigo_pago;
 
     /**
      * Constructor 1 el cual permite crear objetos AnimalVO sin necesidad de
@@ -25,11 +24,10 @@ public class DetalleVO {
      * la clase
      *
      */
-    public DetalleVO(int codigo_detalle, String descripcion_detalle, int valor_detalle, int codigo_pago) {
+    public DetalleVO(int codigo_detalle, String descripcion_detalle, int valor_detalle) {
         this.codigo_detalle = codigo_detalle;
         this.descripcion_detalle = descripcion_detalle;
         this.valor_detalle = valor_detalle;
-        this.codigo_pago = codigo_pago;
 
     }
 
@@ -55,14 +53,6 @@ public class DetalleVO {
 
     public void setValor_detalle(int valor_detalle) {
         this.valor_detalle = valor_detalle;
-    }
-
-    public int getCodigo_pago() {
-        return codigo_pago;
-    }
-
-    public void setCodigo_pago(int codigo_pago) {
-        this.codigo_pago = codigo_pago;
     }
 
 }

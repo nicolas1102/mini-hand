@@ -13,7 +13,7 @@ public class PagoVO {
     // atributo emplados para cada animal que haga las veces de value object
     private int codigo_pago;
     private String estado_pago;
-    private int estudiante_pago;
+    private int codigo_estudiante;
     private int codigo_mes;
     private int codigo_detalle;
 
@@ -33,7 +33,7 @@ public class PagoVO {
     public PagoVO(int codigo_pago, String estado_pago, int estudiante_pago, int codigo_mes, int codigo_detalle) {
         this.codigo_pago = codigo_pago;
         this.estado_pago = estado_pago;
-        this.estudiante_pago = estudiante_pago;
+        this.codigo_estudiante = estudiante_pago;
         this.codigo_mes = codigo_mes;
         this.codigo_detalle = codigo_detalle;
 
@@ -55,13 +55,14 @@ public class PagoVO {
         this.estado_pago = estado_pago;
     }
 
-    public int getEstudiante_pago() {
-        return estudiante_pago;
+    public int getCodigo_estudiante() {
+        return codigo_estudiante;
     }
 
-    public void setEstudiante_pago(int estudiante_pago) {
-        this.estudiante_pago = estudiante_pago;
+    public void setCodigo_estudiante(int codigo_estudiante) {
+        this.codigo_estudiante = codigo_estudiante;
     }
+
 
     public int getCodigo_mes() {
         return codigo_mes;

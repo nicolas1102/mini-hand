@@ -67,7 +67,6 @@ public class DetalleDAO {
                 detalle.setCodigo_detalle(Integer.parseInt(rs.getString("codigo_detalle")));
                 detalle.setDescripcion_detalle(rs.getString("descripcion_detalle"));
                 detalle.setValor_detalle(Integer.parseInt(rs.getString("valor_detalle")));
-                detalle.setCodigo_pago(Integer.parseInt(rs.getString("codigo_pago")));
                 
                 // añade el nuevo  al arraylist
                 misDetalles.add(detalle);

@@ -67,7 +67,7 @@ public class PagoDAO {
                 // pedimos datos del registro y se lo asignamos a cada variable de nuestro animal instanciado anteriomente
                 pago.setCodigo_pago(Integer.parseInt(rs.getString("codigo_pago")));
                 pago.setEstado_pago(rs.getString("estado_pago"));
-                pago.setEstudiante_pago(Integer.parseInt(rs.getString("estudiante_pago")));
+                pago.setCodigo_estudiante(Integer.parseInt(rs.getString("codigo_estudiante")));
                 pago.setCodigo_mes(Integer.parseInt(rs.getString("codigo_mes")));
                 pago.setCodigo_detalle(Integer.parseInt(rs.getString("codigo_detalle")));
                 

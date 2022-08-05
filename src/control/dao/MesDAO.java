@@ -68,7 +68,6 @@ public class MesDAO {
                 mes.setCodigo_mes(Integer.parseInt(rs.getString("codigo_mes")));
                 mes.setNombre_mes(rs.getString("nombre_mes"));
                 mes.setAño_mes(Integer.parseInt(rs.getString("año_mes")));
-                mes.setCodigo_pago(Integer.parseInt(rs.getString("codigo_pago")));
                 
                 // añade el nuevo  al arraylist
                 misMeses.add(mes);
