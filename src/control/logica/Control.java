@@ -7,6 +7,11 @@
 package control.logica;
 
 import control.conexion.Conexion;
+import control.dao.DetallesDAO;
+import control.dao.EstudiantesDAO;
+import control.dao.MesesDAO;
+import control.dao.PagosDAO;
+import control.dao.PersonasDAO;
 import control.dao.RecibosDAO;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +20,11 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
+import modelo.DetalleVO;
+import modelo.EstudianteVO;
+import modelo.MesVO;
+import modelo.PagoVO;
+import modelo.PersonaVO;
 import modelo.ReciboVO;
 import vista.VtnActualizarRecibo;
 import vista.VtnAgregarRecibo;
@@ -38,7 +48,17 @@ public class Control implements ActionListener {
     private VtnAgregarRecibo vtnAgregarRecibo;
     private VtnActualizarRecibo vtnActualizarRecibo;
     private RecibosDAO miRecibosDAO;
+    private DetallesDAO misDetallesDAO;
+    private EstudiantesDAO misEstudiantesDAO;
+    private MesesDAO misMesesDAO;
+    private PagosDAO misPagosDAO;
+    private PersonasDAO misPersonasDAO;
     private ArrayList<ReciboVO> listaRecibos;
+    private ArrayList<DetalleVO> listaDetalles;
+    private ArrayList<EstudianteVO> listaEstudiantes;
+    private ArrayList<MesVO> listaMeses;
+    private ArrayList<PagoVO> listaPagos;
+    private ArrayList<PersonaVO> listaPersonas;
     private int cantRegistros = 0;
 
     // SINGLETON - Control de solo una instancia de clase
@@ -67,15 +87,35 @@ public class Control implements ActionListener {
 
         // arraylist donde se guarda los objetos
         listaRecibos = new ArrayList<>();
+        listaDetalles = new ArrayList<>();
+        listaEstudiantes = new ArrayList<>();
+        listaMeses = new ArrayList<>();
+        listaPagos = new ArrayList<>();
+        listaPersonas = new ArrayList<>();
 
-        // objeto para operaciones con la base de datos
-        miRecibosDAO = RecibosDAO.getInstancia();
-        
-        // recuperacion de registros
-        listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
+        obtenerRegistrosBaseDeDatos();
 
         // iniciar ventana principal
         iniciarVtnPrincipal();
+
+    }
+
+    public void obtenerRegistrosBaseDeDatos() {
+        // objeto para operaciones con la base de datos
+        miRecibosDAO = RecibosDAO.getInstancia();
+        misDetallesDAO = DetallesDAO.getInstancia();
+        misEstudiantesDAO = EstudiantesDAO.getInstancia();
+        misMesesDAO = MesesDAO.getInstancia();
+        misPagosDAO = PagosDAO.getInstancia();
+        misPersonasDAO = misPersonasDAO.getInstancia();
+
+        // recuperacion de registros
+        listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
+        listaDetalles = misDetallesDAO.recuperarListaDeDetallesDeBaseDeDatos();
+        listaEstudiantes = misEstudiantesDAO.recuperarListaDeEstudiantesDeBaseDeDatos();
+        listaMeses = misMesesDAO.recuperarListaDeMesesDeBaseDeDatos();
+        listaPagos = misPagosDAO.recuperarListaDePagosDeBaseDeDatos();
+        listaPersonas = misPersonasDAO.recuperarListaDePersonasBaseDeDatos();
 
     }
 
@@ -92,6 +132,7 @@ public class Control implements ActionListener {
         vtnPrincipal.setVisible(true);
         agregarActionListenerVtnPrincipal();
     }
+
     public void iniciarVtnRecibos() throws IOException {
         //configuracion del titulo de la ventana
         vtnRecibos.setTitle("MiniHand - Recibos");
@@ -161,13 +202,13 @@ public class Control implements ActionListener {
 
     public void actualizarTabla(ArrayList<ReciboVO> auxListaRecibos) {
         DefaultTableModel modelo = (DefaultTableModel) vtnRecibos.tableEstudiantesRegistros.getModel();
-        
+
         // borra registros de tabla
         for (int i = 0; i < cantRegistros; i++) {
             modelo.removeRow(0);
         }
         cantRegistros = 0;
-        
+
         // metodo usado para volver a registrar recibos
         insertarRecibosATabla(auxListaRecibos);
     }
@@ -197,7 +238,7 @@ public class Control implements ActionListener {
             } catch (IOException ex) {
                 Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
+
             // 
             insertarRecibosATabla(listaRecibos);
 
@@ -215,13 +256,27 @@ public class Control implements ActionListener {
             actualizarTabla(auxListaRecibos);
         }
 
+        // -------------------------- VENTANA AGREGAR RECIBO ----------------------
         if (e.getSource() == vtnRecibos.btnAgregarRecibo) {
-//            try {
-//                iniciarVtnAgregarRecibo();
-//
-//            } catch (IOException ex) {
-//                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            try {
+                iniciarVtnAgregarRecibo();
+
+                for (EstudianteVO estudiante : listaEstudiantes) {
+                    PersonaVO personaVO = listaPersonas.get(estudiante.getCodigo_persona() - 1);
+                    vtnAgregarRecibo.cBoxEstudiante.addItem(String.valueOf(estudiante.getCodigo_estudiante()) + " - " + String.valueOf(personaVO.getNombre_persona()));
+                }
+
+                for (DetalleVO detalle : listaDetalles) {
+                    vtnAgregarRecibo.cBoxDescripcion.addItem(String.valueOf(detalle.getCodigo_detalle()) + " - " + String.valueOf(detalle.getDescripcion_detalle()) + " - " + String.valueOf(detalle.getValor_detalle()));
+                }
+
+                for (MesVO mes : listaMeses) {
+                    vtnAgregarRecibo.cBoxMes.addItem(String.valueOf(mes.getCodigo_mes()) + " - " + String.valueOf(mes.getNombre_mes()) + " - " + String.valueOf(mes.getAño_mes()));
+                }
+
+            } catch (IOException ex) {
+                Logger.getLogger(Control.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
         }
 
@@ -236,16 +291,35 @@ public class Control implements ActionListener {
             }
         }
 
-        
+        if (e.getSource() == vtnAgregarRecibo.btnAgregarRecibo) {
+
+            String codigo_estudiante = (String) vtnAgregarRecibo.cBoxEstudiante.getSelectedItem();
+            String[] arrayCodigo_estudiante = codigo_estudiante.split("\\s+");
+
+            String codigo_descripcion = (String) vtnAgregarRecibo.cBoxDescripcion.getSelectedItem();
+            String[] arrayCodigo_descripcion = codigo_descripcion.split("\\s+");
+
+            String codigo_mes = (String) vtnAgregarRecibo.cBoxMes.getSelectedItem();
+            String[] arrayCodigo_mes = codigo_mes.split("\\s+");
+
+            miRecibosDAO.insertarRecibo((String) vtnAgregarRecibo.cBoxEstado.getSelectedItem(), Integer.parseInt(arrayCodigo_estudiante[0]), Integer.parseInt(arrayCodigo_mes[0]), Integer.parseInt(arrayCodigo_descripcion[0]));
+            vtnAgregarRecibo.setVisible(false);
+            vtnAgregarRecibo.dispose();
+
+            listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
+            actualizarTabla(listaRecibos);
+
+        }
+
         // -------------------------- VENTANA ACTUALIZAR RECIBO ----------------------
         if (e.getSource() == vtnActualizarRecibo.btnActualizarRecibo) {
             ReciboVO recibo = listaRecibos.get(Integer.parseInt((String) vtnActualizarRecibo.cBoxCodPago.getSelectedItem()));
-            
+
             miRecibosDAO.modificarRegistro(recibo.getCodigo_pago(), String.valueOf(vtnActualizarRecibo.cBoxCodPago1.getSelectedItem()), recibo.getCodigo_estudiante(), recibo.getCodigo_mes(), recibo.getCodigo_detalle());
             listaRecibos = miRecibosDAO.recuperarDatosDePagosDeBaseDeDatos();
-            
+
             actualizarTabla(listaRecibos);
-            
+
             vtnActualizarRecibo.dispose();
         }
 

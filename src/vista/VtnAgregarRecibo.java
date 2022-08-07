@@ -44,18 +44,14 @@ public class VtnAgregarRecibo extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
         btnAgregarRecibo = new javax.swing.JButton();
-        cBoxValor = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         cBoxEstudiante = new javax.swing.JComboBox<>();
-        cBoxAño = new javax.swing.JComboBox<>();
         cBoxMes = new javax.swing.JComboBox<>();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         cBoxDescripcion = new javax.swing.JComboBox<>();
-        cBoxEstado = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        cBoxEstado = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -73,13 +69,22 @@ public class VtnAgregarRecibo extends javax.swing.JFrame {
 
         jLabel5.setText("Descripcion Pago:");
 
-        jLabel6.setText("Valor:");
+        cBoxEstudiante.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Estudiante -" }));
+
+        cBoxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Mes -" }));
 
         jLabel7.setText("Mes:");
 
-        jLabel8.setText("Año:");
+        cBoxDescripcion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Descripcion Pago -" }));
 
         jLabel9.setText("Estados:");
+
+        cBoxEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "- Estado Recibo -", "true", "false" }));
+        cBoxEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cBoxEstadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -99,17 +104,13 @@ public class VtnAgregarRecibo extends javax.swing.JFrame {
                                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(cBoxEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(cBoxEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnAgregarRecibo, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(54, 54, 54))))
-                    .addComponent(cBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cBoxValor, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(183, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -123,11 +124,7 @@ public class VtnAgregarRecibo extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cBoxDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cBoxAño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,13 +135,9 @@ public class VtnAgregarRecibo extends javax.swing.JFrame {
                         .addGap(114, 114, 114)
                         .addComponent(btnSalir))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(8, 8, 8)
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cBoxValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addComponent(cBoxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
                         .addComponent(btnAgregarRecibo)))
                 .addContainerGap())
         );
@@ -169,22 +162,22 @@ public class VtnAgregarRecibo extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cBoxEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cBoxEstadoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAgregarRecibo;
-    private javax.swing.JButton btnSalir;
-    public javax.swing.JComboBox<String> cBoxAño;
+    public javax.swing.JButton btnSalir;
     public javax.swing.JComboBox<String> cBoxDescripcion;
     public javax.swing.JComboBox<String> cBoxEstado;
     public javax.swing.JComboBox<String> cBoxEstudiante;
     public javax.swing.JComboBox<String> cBoxMes;
-    public javax.swing.JTextField cBoxValor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel3;
+    public javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 
     /**

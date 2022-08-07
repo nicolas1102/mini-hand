@@ -51,7 +51,7 @@ public class RecibosDAO {
 
         // lista donde guardara registros de la base de datos
         ArrayList<ReciboVO> misRecibos = new ArrayList<>();
-        
+
         // Instruccion en sql que pide todos los registros de la base de datos
         String consulta = "SELECT * FROM pagos";
 
@@ -65,7 +65,7 @@ public class RecibosDAO {
             // mientras haya mas registros en la BD sigue ejecutando el bloque de codifo
             while (rsPagos.next()) { // guardado de datos de registros
                 ReciboVO recibo = new ReciboVO();
-                
+
                 recibo.setCodigo_pago(Integer.parseInt(rsPagos.getString("codigo_pago")));
                 recibo.setEstado_pago(rsPagos.getString("estado_pago"));
 
@@ -253,7 +253,7 @@ public class RecibosDAO {
             System.exit(0);
         }
     }
-    
+
     public boolean modificarRegistro(int codigo_pago, String estado_pago, int codigo_estudiante, int codigo_mes, int codigo_detalle) {
         Statement stModicficar = null;
         //Instruccion en sql para modificar cada uno de los campos de un registro con los objetos que llegaron
@@ -289,20 +289,20 @@ public class RecibosDAO {
      * @param user
      * @param pass
      */
-    public void insertarRecibo(int codigo_pago, String estado_pago, String estudiante_pago, String codigo_mes, int codigo_detalle) {
+    public void insertarRecibo(String estado_pago, int codigo_estudiante, int codigo_mes, int codigo_detalle) {
 
         Statement stPagos = null;
         ResultSet rsPagos = null;
         try {
-
+            System.out.println(estado_pago + " " + codigo_estudiante + " " + codigo_mes + " " + codigo_detalle);
             stPagos = con.createStatement();
             // intruccion de insercion a la BD codigo
-            String insercion = "INSERT INTO pagos VALUES(" + codigo_pago + ",'" + estado_pago + "'," + estudiante_pago + "," + codigo_mes + "," + codigo_detalle + ")";
+            String insercion = "INSERT INTO `pagos` (`estado_pago`, `codigo_estudiante`, `codigo_mes`,`codigo_detalle`) VALUES ('" + estado_pago + "','" + codigo_estudiante + "','" + codigo_mes + "','" + codigo_detalle + "')";
 
             // insercion por parte del statement (update)
             stPagos.executeUpdate(insercion);
         } catch (SQLException ex) {
-            System.out.print("No se pudo realizar la insercion");
+            System.out.print("1No se pudo realizar la insercion");
         }
     }
 

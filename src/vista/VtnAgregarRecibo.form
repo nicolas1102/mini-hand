@@ -76,9 +76,8 @@
                                       <Component id="jLabel7" alignment="0" min="-2" pref="81" max="-2" attributes="0"/>
                                       <Component id="jLabel1" min="-2" pref="91" max="-2" attributes="0"/>
                                       <Component id="jLabel5" alignment="0" min="-2" pref="174" max="-2" attributes="0"/>
-                                      <Component id="jLabel8" alignment="0" min="-2" pref="81" max="-2" attributes="0"/>
-                                      <Component id="jLabel6" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
                                       <Component id="cBoxEstudiante" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="cBoxEstado" alignment="0" min="-2" pref="245" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
@@ -88,10 +87,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <Component id="cBoxAño" min="-2" pref="245" max="-2" attributes="0"/>
                       <Component id="cBoxMes" min="-2" pref="245" max="-2" attributes="0"/>
-                      <Component id="cBoxEstado" min="-2" pref="245" max="-2" attributes="0"/>
-                      <Component id="cBoxValor" min="-2" pref="245" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="183" max="32767" attributes="0"/>
               </Group>
@@ -108,11 +104,7 @@
                   <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="cBoxDescripcion" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="cBoxAño" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                  <EmptySpace pref="74" max="32767" attributes="0"/>
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="cBoxMes" min="-2" max="-2" attributes="0"/>
@@ -124,13 +116,9 @@
                           <Component id="btnSalir" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cBoxEstado" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="cBoxValor" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="cBoxEstado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                           <Component id="btnAgregarRecibo" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -162,11 +150,6 @@
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="cBoxValor">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Estudiante:"/>
@@ -177,26 +160,12 @@
             <Property name="text" type="java.lang.String" value="Descripcion Pago:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel6">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Valor:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JComboBox" name="cBoxEstudiante">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cBoxA&#xf1;o">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
+              <StringArray count="1">
+                <StringItem index="0" value="- Estudiante -"/>
+              </StringArray>
             </Property>
           </Properties>
           <AuxValues>
@@ -207,7 +176,9 @@
         <Component class="javax.swing.JComboBox" name="cBoxMes">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
+              <StringArray count="1">
+                <StringItem index="0" value="- Mes -"/>
+              </StringArray>
             </Property>
           </Properties>
           <AuxValues>
@@ -220,26 +191,12 @@
             <Property name="text" type="java.lang.String" value="Mes:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="jLabel8">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="A&#xf1;o:"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JComboBox" name="cBoxDescripcion">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
-          </AuxValues>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="cBoxEstado">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
+              <StringArray count="1">
+                <StringItem index="0" value="- Descripcion Pago -"/>
+              </StringArray>
             </Property>
           </Properties>
           <AuxValues>
@@ -251,6 +208,24 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Estados:"/>
           </Properties>
+        </Component>
+        <Component class="javax.swing.JComboBox" name="cBoxEstado">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="3">
+                <StringItem index="0" value="- Estado Recibo -"/>
+                <StringItem index="1" value="true"/>
+                <StringItem index="2" value="false"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cBoxEstadoActionPerformed"/>
+          </Events>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
