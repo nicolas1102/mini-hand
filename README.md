@@ -6,6 +6,6 @@ Program was developed for Database Basics class (12/08/2022).
 
 Developers:
 
-Miguel Londono
-Nicolas Diaz
-Felipe Pacheco
+ - Miguel Londono
+ - Nicolas Diaz
+ - Felipe Pacheco
