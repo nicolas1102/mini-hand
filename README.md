@@ -4,7 +4,7 @@ This program is a demo system for the control of the pensions of the students of
 
 Program was developed for Database Basics class (12/08/2022).
 
-Developers:
+#Developers:
 
  - Miguel Londono
  - Nicolas Diaz
