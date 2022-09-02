@@ -1,4 +1,4 @@
-# FBD_Proyecto_Mini_Hand
+# Mini Hand
 
 This program is a demo system for the control of the pensions of the students of a college.
 
